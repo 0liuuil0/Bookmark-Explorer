@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>收藏夹管理器</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- 顶部工具栏 -->
+        <header class="app-header">
+            <div class="header-left">
+                <h1><i class="fas fa-bookmark"></i> 收藏夹管理器</h1>
+                <div class="breadcrumb" id="breadcrumb">
+                    <span class="breadcrumb-item">全部收藏夹</span>
+                </div>
+            </div>
+            
+            <div class="header-right">
+                <div class="toolbar">
+                    <button id="importBtn" class="btn btn-primary">
+                        <i class="fas fa-file-import"></i> 导入
+                    </button>
+                    <input type="file" id="fileInput" accept=".html" style="display: none;">
+                    <button id="exportBtn" class="btn">
+                        <i class="fas fa-file-export"></i> 导出
+                    </button>
+                    <div class="divider"></div>
+                    <button id="newFolderBtn" class="btn">
+                        <i class="fas fa-folder-plus"></i> 新建文件夹
+                    </button>
+                    <button id="refreshBtn" class="btn btn-icon">
+                        <i class="fas fa-sync-alt"></i>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- 主内容区 - 三栏布局 -->
+        <div class="main-content">
+            <!-- 左侧栏：文件夹树 -->
+            <div class="left-sidebar">
+                <div class="sidebar-header">
+                    <h3><i class="fas fa-folder-tree"></i> 文件夹</h3>
+                    <button id="collapseAllFolders" class="btn-icon" title="折叠所有">
+                        <i class="fas fa-compress"></i>
+                    </button>
+                </div>
+                
+                <div class="folder-tree" id="folderTree">
+                    <!-- 动态生成的文件夹树 -->
+                </div>
+                
+                <div class="sidebar-footer">
+                    <div class="folder-stats">
+                        <span id="folderCount">0 个文件夹</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 中间栏：链接列表 -->
+            <div class="main-panel">
+                <div class="panel-header">
+                    <div class="panel-title">
+                        <h3 id="currentFolderTitle">所有链接</h3>
+                        <span class="link-count" id="linkCount">0 个项目</span>
+                    </div>
+                    
+                    <div class="panel-actions">
+                        <div class="search-box">
+                            <i class="fas fa-search"></i>
+                            <input type="text" id="searchLinks" placeholder="在当前文件夹搜索...">
+                            <button id="clearLinkSearch" class="btn-icon" title="清除搜索">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                        
+                        <div class="view-controls">
+                            <button class="btn-icon active" title="列表视图">
+                                <i class="fas fa-list"></i>
+                            </button>
+                            <button class="btn-icon" title="网格视图">
+                                <i class="fas fa-th-large"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="selection-toolbar hidden" id="selectionToolbar">
+                    <div class="selection-info">
+                        <span id="selectedCount">已选择 0 个项目</span>
+                    </div>
+                    <div class="selection-actions">
+                        <button id="moveSelectedBtn" class="btn btn-sm" disabled>
+                            <i class="fas fa-arrows-alt"></i> 移动到
+                        </button>
+                        <button id="deleteSelectedBtn" class="btn btn-sm btn-danger" disabled>
+                            <i class="fas fa-trash"></i> 删除
+                        </button>
+                        <button id="cancelSelectionBtn" class="btn btn-sm">
+                            <i class="fas fa-times"></i> 取消选择
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="links-container" id="linksContainer">
+                    <div class="links-grid" id="linksGrid">
+                        <!-- 动态生成的链接列表 -->
+                    </div>
+                    
+                    <div class="empty-state" id="emptyState">
+                        <div class="empty-icon">
+                            <i class="fas fa-bookmark"></i>
+                        </div>
+                        <h3>暂无链接</h3>
+                        <p>当前文件夹没有链接，或没有匹配的搜索结果</p>
+                        <button id="addFirstLink" class="btn btn-primary">
+                            <i class="fas fa-plus"></i> 添加第一个链接
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 右侧栏：操作面板 -->
+            <div class="right-sidebar">
+                <div class="sidebar-header">
+                    <h3><i class="fas fa-cogs"></i> 操作面板</h3>
+                </div>
+                
+                <div class="operations-panel">
+                    <!-- 快速操作 -->
+                    <div class="operation-section">
+                        <h4><i class="fas fa-bolt"></i> 快速操作</h4>
+                        <div class="quick-actions">
+                            <button id="quickNewLink" class="btn btn-block">
+                                <i class="fas fa-plus"></i> 新建链接
+                            </button>
+                            <button id="quickNewFolder" class="btn btn-block">
+                                <i class="fas fa-folder-plus"></i> 新建子文件夹
+                            </button>
+                            <button id="renameItem" class="btn btn-block" disabled>
+                                <i class="fas fa-edit"></i> 重命名
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- 批量操作 -->
+                    <div class="operation-section">
+                        <h4><i class="fas fa-object-group"></i> 批量操作</h4>
+                        <div class="bulk-actions">
+                            <div class="form-group">
+                                <label>移动到文件夹:</label>
+                                <select id="targetFolderSelect" class="form-select">
+                                    <option value="">-- 选择目标文件夹 --</option>
+                                </select>
+                                <button id="moveToFolderBtn" class="btn btn-block" disabled>
+                                    <i class="fas fa-check"></i> 确认移动
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 链接编辑 
+                    <div class="operation-section">
+                        <h4><i class="fas fa-edit"></i> 链接编辑</h4>
+                        <div class="link-edit-form" id="linkEditForm">
+                            <div class="form-group">
+                                <label>标题:</label>
+                                <input type="text" id="editLinkTitle" class="form-input" placeholder="未选择链接" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label>URL:</label>
+                                <input type="text" id="editLinkUrl" class="form-input" placeholder="未选择链接" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label>图标:</label>
+                                <input type="text" id="editLinkIcon" class="form-input" placeholder="未选择链接" readonly>
+                            </div>
+                            <div class="form-actions">
+                                <button id="saveLinkBtn" class="btn btn-primary" disabled>
+                                    保存更改
+                                </button>
+                                <button id="openLinkBtn" class="btn" disabled>
+                                    打开链接
+                                </button>
+                            </div>
+                        </div>
+                    </div>-->
+
+                    <!-- 文件夹编辑 
+                    <div class="operation-section">
+                        <h4><i class="fas fa-folder"></i> 文件夹编辑</h4>
+                        <div class="folder-edit-form" id="folderEditForm">
+                            <div class="form-group">
+                                <label>文件夹名称:</label>
+                                <input type="text" id="editFolderName" class="form-input" placeholder="未选择文件夹" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label>父文件夹:</label>
+                                <select id="editFolderParent" class="form-select" disabled>
+                                    <option value="root">根目录</option>
+                                </select>
+                            </div>
+                            <div class="form-actions">
+                                <button id="saveFolderBtn" class="btn btn-primary" disabled>
+                                    保存更改
+                                </button>
+                            </div>
+                        </div>
+                    </div>-->
+
+                    <!-- 统计信息 -->
+                    <div class="operation-section">
+                        <h4><i class="fas fa-chart-pie"></i> 统计信息</h4>
+                        <div class="stats-info">
+                            <div class="stat-item">
+                                <span class="stat-label">总文件夹:</span>
+                                <span class="stat-value" id="totalFolderCount">0</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">总链接数:</span>
+                                <span class="stat-value" id="totalLinkCount">0</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">选中链接:</span>
+                                <span class="stat-value" id="selectedLinkCount">0</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">最后更新:</span>
+                                <span class="stat-value" id="lastUpdated">--</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 底部状态栏 -->
+        <footer class="status-bar">
+            <div class="status-left">
+                <span id="totalItems">0 个项目</span>
+                <span class="status-divider">|</span>
+                <span id="currentPath">全部收藏夹</span>
+            </div>
+            <div class="status-right">
+                <span id="statusMessage">就绪</span>
+                <span class="status-divider">|</span>
+                <span>按 <kbd>Ctrl</kbd> + <kbd>点击</kbd> 多选，<kbd>Shift</kbd> + <kbd>点击</kbd> 连续选择</span>
+            </div>
+        </footer>
+
+        <!-- 模态对话框 -->
+        <div id="modal" class="modal hidden">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 id="modalTitle">提示</h3>
+                    <button class="btn-icon close-modal">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="modal-body" id="modalBody">
+                    <!-- 动态内容 -->
+                </div>
+                <div class="modal-footer">
+                    <button id="modalConfirmBtn" class="btn btn-primary">确定</button>
+                    <button id="modalCancelBtn" class="btn">取消</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 新建链接对话框 -->
+        <div id="newLinkModal" class="modal hidden">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>新建链接</h3>
+                    <button class="btn-icon close-new-link-modal">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="newLinkForm">
+                        <div class="form-group">
+                            <label>标题 *</label>
+                            <input type="text" id="newLinkTitle" class="form-input" required
+                                   placeholder="例如：GitHub">
+                        </div>
+                        <div class="form-group">
+                            <label>URL *</label>
+                            <input type="url" id="newLinkUrl" class="form-input" required
+                                   placeholder="https://example.com">
+                        </div>
+                        <div class="form-group">
+                            <label>图标 (可选)</label>
+                            <input type="text" id="newLinkIcon" class="form-input"
+                                   placeholder="data:image/png;base64,... 或 图标URL">
+                        </div>
+                        <div class="form-group">
+                            <label>父文件夹</label>
+                            <select id="newLinkFolder" class="form-select">
+                                <option value="root">根目录</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="createLinkBtn" class="btn btn-primary">创建</button>
+                    <button type="button" class="btn close-new-link-modal">取消</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 移动对话框 -->
+        <div id="moveModal" class="modal hidden">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>移动到文件夹</h3>
+                    <button class="btn-icon close-move-modal">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="move-description">
+                        <p>将 <span id="moveItemCount">0</span> 个项目移动到：</p>
+                    </div>
+                    <div class="move-folder-tree" id="moveFolderTree">
+                        <!-- 移动用的文件夹树 -->
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button id="confirmMoveBtn" class="btn btn-primary">移动到此处</button>
+                    <button class="btn close-move-modal">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
