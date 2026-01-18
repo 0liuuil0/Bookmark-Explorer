@@ -2,7 +2,9 @@
 # 📚 收藏夹管理器
 # Bookmark-Explorer
 
-[![GitHub license](https://img.shields.io/github/license/0liuuil0/Bookmark-Explorer)](LICENSE)
+![File Size](https://img.shields.io/badge/File%20Size-89KB-blue)
+![GitHub stars](https://img.shields.io/github/stars/0liuuil0/Bookmark-Explorer.svg?style=social&label=Star)
+![GitHub issues](https://img.shields.io/github/issues/0liuuil0/Bookmark-Explorer.svg)
 [![GitHub last commit](https://img.shields.io/github/last-commit/0liuuil0/Bookmark-Explorer)](https://github.com/0liu/Bookmark-Explorer/commits/main)
 
 一个现代化的、功能完整的收藏夹管理工具，采用三栏设计，支持导入、导出、搜索和管理浏览器收藏夹。
@@ -46,6 +48,20 @@
 1. 下载项目文件到本地
 2. 打开 `index.html` 文件（比如使用VScode）
 3. 开始使用！
+
+## 版本更新
+- 20260118-v1.0.0 by 0liuuil0
+
+## 贡献&联系作者
+
+欢迎任何形式的贡献！如果你有任何改进建议或发现了bug，有任何疑问或者侵权事宜，可发送邮件到
+
+![Email](https://img.shields.io/badge/email-y0x4nu5@outlook.com-yellow.svg)
+
+## 许可证
+[![GitHub license](https://img.shields.io/github/license/0liuuil0/Bookmark-Explorer)](LICENSE)
+
+本项目采用 Apache 2.0 许可证。详情请参阅 [LICENSE](LICENSE) 文件。
 
 
 
