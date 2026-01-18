@@ -25,6 +25,7 @@
 - ✅ **拖拽操作**：拖拽链接进行移动
 - ✅ **新建管理**：创建新文件夹和链接
 - ✅ **实时统计**：显示收藏夹统计数据
+- ❌**未实现功能**（后续待开发）：删除文件夹、更清晰的文件夹层级
 
 ### 🎯 选择模式
 - **Ctrl+点击**：多选/取消选择
@@ -60,6 +61,7 @@
 [![GitHub license](https://img.shields.io/github/license/0liuuil0/Bookmark-Explorer)](LICENSE)
 
 本项目采用 Apache 2.0 许可证。详情请参阅 [LICENSE](LICENSE) 文件。
+
 
 
 
