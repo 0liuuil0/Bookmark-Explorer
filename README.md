@@ -2,9 +2,6 @@
 # 📚 收藏夹管理器
 # Bookmark-Explorer
 
-[![GitHub stars](https://img.shields.io/github/stars/0liu/Bookmark-Explorer)](https://github.com/0liuuil0/Bookmark-Explorer/stargazers)
-[![GitHub forks](https://img.shields.io/github/forks/0liu/Bookmark-Explorer)](https://github.com/0liuuil0/Bookmark-Explorer/network/members)
-[![GitHub issues](https://img.shields.io/github/issues/0liu/Bookmark-Explorer)](https://github.com/0liuuil0/Bookmark-Explorer/issues)
 [![GitHub license](https://img.shields.io/github/license/0liuuil0/Bookmark-Explorer)](LICENSE)
 [![GitHub last commit](https://img.shields.io/github/last-commit/0liuuil0/Bookmark-Explorer)](https://github.com/0liu/Bookmark-Explorer/commits/main)
 一个现代化的、功能完整的收藏夹管理工具，采用三栏设计，支持导入、导出、搜索和管理浏览器收藏夹。
@@ -48,5 +45,6 @@
 1. 下载项目文件到本地
 2. 打开 `index.html` 文件（比如使用VScode）
 3. 开始使用！
+
 
 
