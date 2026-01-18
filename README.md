@@ -1,4 +1,4 @@
-# 📚 收藏夹管理器 Bookmark-Explorer 
+# 📚 浏览器收藏夹管理器 Bookmark-Explorer 
 
 ![File Size](https://img.shields.io/badge/File%20Size-89KB-blue)
 ![GitHub stars](https://img.shields.io/github/stars/0liuuil0/Bookmark-Explorer.svg?style=social&label=Star)
@@ -61,6 +61,7 @@
 [![GitHub license](https://img.shields.io/github/license/0liuuil0/Bookmark-Explorer)](LICENSE)
 
 本项目采用 Apache 2.0 许可证。详情请参阅 [LICENSE](LICENSE) 文件。
+
 
 
 
