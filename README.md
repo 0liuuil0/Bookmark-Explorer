@@ -47,19 +47,20 @@
 2. 打开 `index.html` 文件（比如使用VScode）
 3. 开始使用！
 
-## 版本更新
+## 👆 版本更新
 - 20260118-v1.0.0 by 0liuuil0
 
-## 贡献&联系作者
+## 📧 贡献&联系作者
 
 欢迎任何形式的贡献！如果你有任何改进建议或发现了bug，有任何疑问或者侵权事宜，可发送邮件到
 
 ![Email](https://img.shields.io/badge/email-y0x4nu5@outlook.com-yellow.svg)
 
-## 许可证
+## ⚖ 许可证
 [![GitHub license](https://img.shields.io/github/license/0liuuil0/Bookmark-Explorer)](LICENSE)
 
 本项目采用 Apache 2.0 许可证。详情请参阅 [LICENSE](LICENSE) 文件。
+
 
 
 
